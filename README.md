@@ -59,20 +59,71 @@ The server will start on `http://localhost:3000/sse`
 
 ## 🔌 Connect to Cursor IDE
 
-### Method 1: Using Cursor Settings (Recommended)
+### Method 1: Direct Configuration in `mcp.json` (Recommended)
+
+1. **Locate your Cursor MCP configuration file**:
+   - **macOS**: `~/.cursor/mcp.json`
+   - **Windows**: `%APPDATA%\.cursor\mcp.json`
+   - **Linux**: `~/.cursor/mcp.json`
+
+2. **Add the MCP server configuration**:
+
+   Edit the `mcp.json` file and add the following configuration:
+
+   ```json
+   {
+     "mcpServers": {  
+       "jira-resolution": {
+         "command": "node",
+         "args": ["/absolute/path/to/Appd_jira_context_mcp/dist/index.js"],
+         "cwd": "/absolute/path/to/Appd_jira_context_mcp",
+         "env": {
+           "JIRA_BASE_URL": "https://your-domain.atlassian.net",
+           "JIRA_USERNAME": "your-email@example.com",
+           "JIRA_API_TOKEN": "your-api-token-here",
+           "DB_TYPE": "mysql",
+           "DB_HOST": "localhost",
+           "DB_PORT": "3306",
+           "DB_USER": "root",
+           "DB_PASSWORD": "your-database-password",
+           "DB_NAME": "",
+           "DB_SSL": "false"
+         }
+       }
+     }
+   }
+   ```
+
+3. **Replace the placeholders**:
+   - `"/absolute/path/to/Appd_jira_context_mcp"` → Full path to where you cloned the repo
+   - `"your-domain.atlassian.net"` → Your Jira instance URL
+   - `"your-email@example.com"` → Your Jira username/email
+   - `"your-api-token-here"` → Your Jira API token
+   - `"your-database-password"` → Your MySQL password (if using database features)
+
+4. **Save the file and restart Cursor IDE**
+
+5. **Verify connection**:
+   - Open Cursor IDE
+   - The MCP server should automatically connect
+   - You can verify by typing commands in the chat
+
+### Method 2: Using Cursor Settings UI
 
 1. Open Cursor IDE
 2. Go to **Settings** → **Features** → **Model Context Protocol**
 3. Add a new MCP server with:
    - **Name**: Jira Context MCP
-   - **URL**: `http://localhost:3000/sse`
+   - **URL**: `http://localhost:3000/sse` (requires server to be running separately)
 4. Click **Connect**
 
-### Method 2: Using Command Palette
+### Method 3: Using Command Palette
 
 1. Open Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
 2. Type **"Connect to MCP Server"**
-3. Enter: `http://localhost:3000/sse`
+3. Enter: `http://localhost:3000/sse` (requires server to be running separately)
+
+> **Note**: Method 1 (mcp.json) is recommended as it starts the server automatically and doesn't require running `npm start` separately.
 
 ## 🛠️ Available Tools
 
@@ -173,17 +224,35 @@ npm run type-check
 ### Server won't start
 - Ensure Node.js version is 20.17.0 or higher: `node --version`
 - Check if port 3000 is available
-- Verify `.env` file is configured correctly
+- Verify `.env` file is configured correctly (if using Method 2/3)
+- Run `npm run build` to ensure the `dist/` folder exists
 
 ### Can't connect in Cursor
-- Make sure the server is running (`npm start`)
+- If using **mcp.json**: Make sure the paths are absolute and correct
+- If using **HTTP mode**: Make sure the server is running (`npm start`)
 - Verify the URL is `http://localhost:3000/sse`
 - Check Cursor's MCP connection settings
+- Restart Cursor IDE after modifying `mcp.json`
 
 ### Jira API errors
 - Verify your API token is valid
 - Ensure `JIRA_BASE_URL` matches your Jira instance
 - Check your Jira account has necessary permissions
+- Make sure there are no extra spaces in your credentials
+
+### MCP server not showing tools
+- Run `npm run build` to compile TypeScript
+- Check console for error messages
+- Verify all environment variables are set correctly
+
+## 🔒 Security Note
+
+**Important**: The `mcp.json` file contains sensitive credentials (API tokens, database passwords). 
+
+- Keep your `mcp.json` file secure and never commit it to version control
+- The `mcp.json` file is stored locally on your machine
+- Only you have access to these credentials
+- Generate API tokens with minimum required permissions
 
 ## 📄 License
 
