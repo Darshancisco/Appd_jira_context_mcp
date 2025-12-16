@@ -28,20 +28,39 @@ if (!JIRA_API_TOKEN) {
   process.exit(1);
 }
 
+// Optional database configuration
+const dbConfig = process.env.DB_HOST ? {
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || "3306"),
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME,
+  ssl: process.env.DB_SSL === "true",
+} : undefined;
+
+if (dbConfig) {
+  console.error(`[DEBUG] 🗄️  Database configuration found: ${dbConfig.host}:${dbConfig.port}`);
+  if (dbConfig.database) {
+    console.error(`[DEBUG] Default database: ${dbConfig.database}`);
+  }
+}
+
 // Initialize the server
-const server = new JiraMcpServer(JIRA_BASE_URL, JIRA_USERNAME, JIRA_API_TOKEN);
+const server = new JiraMcpServer(JIRA_BASE_URL, JIRA_USERNAME, JIRA_API_TOKEN, dbConfig);
 
 // Start the appropriate transport based on NODE_ENV
 async function start() {
-  console.log('Starting Jira MCP server...');
+  console.error('[DEBUG] Starting Jira Resolution MCP server...');
 
-  if (process.env.NODE_ENV === 'cli') {
-    console.log('🔌 Using stdio transport');
+  // Default to stdio mode (for Cursor/MCP clients)
+  // Only use HTTP mode if explicitly set with NODE_ENV=http
+  if (process.env.NODE_ENV === 'http') {
+    console.error(`[DEBUG] 🌐 Starting HTTP server on port ${HTTP_PORT}`);
+    await server.startHttpServer(HTTP_PORT);
+  } else {
+    console.error('[DEBUG] 🔌 Using stdio transport (MCP mode)');
     const transport = new StdioServerTransport();
     await server.connect(transport);
-  } else {
-    console.log(`🌐 Starting HTTP server on port ${HTTP_PORT}`);
-    await server.startHttpServer(HTTP_PORT);
   }
 }
 

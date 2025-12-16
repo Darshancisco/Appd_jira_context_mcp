@@ -1,249 +1,201 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/rahulthedevil-jira-context-mcp-badge.png)](https://mseep.ai/app/rahulthedevil-jira-context-mcp)
+# Jira Context MCP Server
 
-# Jira Context MCP
-[![CodeQL Advanced](https://github.com/rahulthedevil/Jira-Context-MCP/actions/workflows/codeql.yml/badge.svg)](https://github.com/rahulthedevil/Jira-Context-MCP/actions/workflows/codeql.yml)
-[![smithery badge](https://smithery.ai/badge/@rahulthedevil/Jira-Context-MCP)](https://smithery.ai/server/@rahulthedevil/Jira-Context-MCP)
-[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/d3bb0c74-58fd-4683-a3c7-99cc0342eecc)
-<figure>
-    <a href="https://glama.ai/mcp/servers/a8ob8depqc">
-     <img width="380" height="200" src="https://glama.ai/mcp/servers/a8ob8depqc/badge" />
-   </a>
-</figure>
+A powerful Model Context Protocol (MCP) server that integrates Jira with Cursor IDE, enabling AI-powered issue management, sprint tracking, and library vulnerability analysis.
 
-A Model Context Protocol (MCP) implementation for Jira that allows you to:
+## 🚀 Features
 
-- Input a Jira ticket link to fetch issue details and instruct Cursor to fix it
-- Retrieve all tickets assigned to you within a specified Jira project 
-- Filter Jira issues based on a specific issue type and automatically direct Cursor to resolve them
-- Integrate seamlessly with Jira's API for automation and efficiency
+- **Jira Integration**: Fetch issue details, manage sprints, track progress
+- **Sprint Management**: View active sprints, generate reports, analyze backlog
+- **Library Vulnerability Analysis**: Check Maven/NPM packages for vulnerabilities and upgrade recommendations
+- **Database Integration**: Query MySQL databases directly from Cursor
+- **Smart URL Parser**: Paste any Jira board/sprint URL and get instant insights
 
-## Setup
-
-### Prerequisites
+## 📋 Prerequisites
 
 - Node.js 20.17.0 or higher
 - A Jira account with API access
-- A Jira API token (can be generated at [Atlassian API Tokens](https://id.atlassian.com/manage-profile/security/api-tokens))
+- Jira API token ([Generate here](https://id.atlassian.com/manage-profile/security/api-tokens))
 
-### Installation
+## ⚙️ Installation
 
-#### Installing via Smithery
-
-To install Jira Context MCP for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@rahulthedevil/Jira-Context-MCP):
-
-```bash
-npx -y @smithery/cli install @rahulthedevil/Jira-Context-MCP --client claude
-```
-
-#### Installing manually
-
-1. Clone this repository:
+1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/Jira-Context-MCP.git
-   cd Jira-Context-MCP
+   git clone https://github.com/Darshancisco/Appd_jira_context_mcp.git
+   cd Appd_jira_context_mcp
    ```
 
-2. Install dependencies:
+2. **Install dependencies**:
    ```bash
    npm install
-   # or if you use pnpm
-   pnpm install
    ```
 
-3. Create a `.env` file based on the example:
+3. **Create `.env` file**:
    ```bash
    cp .env.example .env
    ```
 
-4. Edit the `.env` file with your Jira details:
-   ```
+4. **Configure your `.env` file**:
+   ```env
    JIRA_BASE_URL=https://your-domain.atlassian.net
    JIRA_USERNAME=your-email@example.com
    JIRA_API_TOKEN=your-api-token-here
    HTTP_PORT=3000
    ```
 
-### Build
+5. **Build the project**:
+   ```bash
+   npm run build
+   ```
 
-Build the project with:
+## 🏃 Running the Server
 
-```bash
-npm run build
-# or
-pnpm build
-```
-
-## Usage
-
-### Starting the Server
-
-Start the HTTP server:
+Start the MCP server:
 
 ```bash
 npm start
-# or
-pnpm start
 ```
 
-Or use the CLI mode:
+The server will start on `http://localhost:3000/sse`
 
-```bash
-npm run start:cli
-# or
-pnpm start:cli
-```
+## 🔌 Connect to Cursor IDE
 
-### Connecting with Cursor
+### Method 1: Using Cursor Settings (Recommended)
 
-1. In Cursor, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P)
+1. Open Cursor IDE
+2. Go to **Settings** → **Features** → **Model Context Protocol**
+3. Add a new MCP server with:
+   - **Name**: Jira Context MCP
+   - **URL**: `http://localhost:3000/sse`
+4. Click **Connect**
+
+### Method 2: Using Command Palette
+
+1. Open Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
 2. Type **"Connect to MCP Server"**
-3. Select **"Connect to MCP Server"**
-4. Enter the server URL (default: `http://localhost:3000/sse`)
+3. Enter: `http://localhost:3000/sse`
 
-## Available Tools
+## 🛠️ Available Tools
 
-Once connected, you can use the following tools in Cursor:
+Once connected, you can use these tools in Cursor:
 
-### 1. Get Jira Issue Details
+### Jira Issue Management
+- `get_issue` - Get detailed information about a Jira issue
+- `get_assigned_issues` - Get issues assigned to you
+- `get_issues_by_type` - Filter issues by type (Bug, Story, Epic, etc.)
+- `get_projects` - List all available Jira projects
+- `get_issue_types` - List all issue types
 
-Fetch detailed information about a specific Jira issue:
+### Sprint & Board Management
+- `analyze_jira_url` - Parse any Jira URL (board/sprint/issue)
+- `get_boards` - List all agile boards
+- `get_sprints` - Get sprints for a board
+- `get_sprint_issues` - Get all issues in a sprint
+- `get_backlog` - Get backlog issues
+- `get_sprint_report` - Generate comprehensive sprint report
+
+### Library Vulnerability Tools
+- `check_maven_library` - Check Maven library for vulnerabilities
+- `check_npm_library` - Check NPM package for vulnerabilities
+- `analyze_dependencies` - Analyze project dependencies
+- `recommend_upgrade` - Get smart upgrade recommendations
+- `get_github_release_notes` - Fetch release notes for library upgrades
+- `find_library_usage` - Find where a library is used in codebase
+
+### Database Tools
+- `list_databases` - List all MySQL databases
+- `list_db_tables` - List tables in a database
+- `get_table_schema` - Get table structure
+- `query_database` - Execute SQL queries
+- `search_table` - Search across table columns
+
+## 💡 Example Usage
+
+### Analyze Your Sprint Board
 ```
-/get_issue issueKey:PROJECT-123
-```
-
-### 2. Get Assigned Issues
-
-Retrieve issues assigned to you in a specific project:
-```
-/get_assigned_issues projectKey:PROJECT maxResults:10
-```
-
-### 3. Get Issues by Type
-
-Filter issues by type (Bug, Story, Epic, etc.):
-```
-/get_issues_by_type issueType:Bug projectKey:PROJECT maxResults:10
-```
-
-### 4. Get Projects
-
-List all available projects:
-```
-/get_projects
-```
-
-### 5. Get Issue Types
-
-List all available issue types:
-```
-/get_issue_types
-```
-
-### 6. Get Recent Ticket Changes
-
-Retrieve changes made in tickets over a specified period (e.g., the last 7 days) in a project:
-```
-/get_recent_changes projectKey:PROJECT maxDays:7
+Analyze my sprint board: https://jira.corp.appdynamics.com/secure/RapidBoard.jspa?rapidView=2823
 ```
 
-## Command Examples
+### Check Library Vulnerability
+```
+Check if org.springframework:spring-core version 5.3.0 has any vulnerabilities
+```
 
-🚀 **Jira MCP Server + Cursor IDE = Your AI-powered Jira assistant!** Here’s how it makes devs work smarter:
+### Get Assigned Issues
+```
+Show me all issues assigned to me in project ABC
+```
 
-📂 **"List all Jira projects I have access to"**  
-→ AI fetches all available projects instantly  
-No more searching manually!
+### Sprint Report
+```
+Generate sprint report for board 2823
+```
 
-📋 **"List all issues in PROJECT"**  
-→ AI retrieves all open tickets  
-Stay organized without effort!
+## 📁 Project Structure
 
-🐛 **"Filter only Bugs or Change Requests and fix them"**  
-→ AI identifies & directs Cursor to resolve them  
-Fix issues faster with automation!
+```
+.
+├── src/
+│   ├── index.ts              # Application entry point
+│   ├── server.ts             # MCP server implementation
+│   ├── cli.ts                # CLI interface
+│   ├── services/             # Core services
+│   │   ├── jira.ts           # Jira API integration
+│   │   ├── libraryManager.ts # Library vulnerability analysis
+│   │   ├── DatabaseService.ts # MySQL integration
+│   │   └── ...
+│   ├── types/                # TypeScript type definitions
+│   └── utils/                # Utility functions
+├── dist/                     # Compiled JavaScript (generated)
+├── package.json              # Dependencies
+├── tsconfig.json             # TypeScript config
+└── .env                      # Environment variables (create this)
+```
 
-✅ **"Find all tickets assigned to me and fix them"**  
-→ AI pulls your tasks & lets Cursor handle them  
-Stay on top of your work with zero hassle!
+## 🔧 Development
 
-🔍 **"Get details for Jira issue PROJECT-123"**  
-→ AI fetches full issue info in seconds  
-No more switching tabs!
+### Run in development mode:
+```bash
+npm run dev
+```
 
-📊 **"What changed in tickets in the last 7 days in PROJECT?"**  
-→ AI tracks recent updates & highlights key changes  
-No more manually checking ticket histories!
+### Build:
+```bash
+npm run build
+```
 
-🔥 **TL;DR:** Your AI now speaks Jira + Cursor! Fetch projects, filter issues, track changes & fix bugs—all inside your IDE.  
-From backlog to bug fixes, MCP Server makes Jira work for you!
+### Type checking:
+```bash
+npm run type-check
+```
 
-## Example Workflows
+## 🐛 Troubleshooting
 
-### Fix a Specific Bug
+### Server won't start
+- Ensure Node.js version is 20.17.0 or higher: `node --version`
+- Check if port 3000 is available
+- Verify `.env` file is configured correctly
 
-1. Connect to the Jira MCP server in Cursor.
-2. Get the issue details:
-   ```
-   /get_issue issueKey:PROJECT-123
-   ```
-3. Review the issue details and instruct Cursor to fix it:
-   ```
-   Fix the bug described in PROJECT-123
-   ```
+### Can't connect in Cursor
+- Make sure the server is running (`npm start`)
+- Verify the URL is `http://localhost:3000/sse`
+- Check Cursor's MCP connection settings
 
-### Work on Your Assigned Issues
+### Jira API errors
+- Verify your API token is valid
+- Ensure `JIRA_BASE_URL` matches your Jira instance
+- Check your Jira account has necessary permissions
 
-1. Connect to the Jira MCP server in Cursor.
-2. Retrieve your assigned issues:
-   ```
-   /get_assigned_issues projectKey:PROJECT
-   ```
-3. Ask Cursor to help with one of the issues:
-   ```
-   Help me solve the first issue in my assigned list
-   ```
+## 📄 License
 
-### Fix All Bugs in a Project
+MIT License
 
-1. Connect to the Jira MCP server in Cursor.
-2. Retrieve all bug issues:
-   ```
-   /get_issues_by_type issueType:Bug projectKey:PROJECT
-   ```
-3. Instruct Cursor:
-   ```
-   Help me fix these bugs one by one
-   ```
+## 👤 Author
 
-### Review Recent Changes
+**Darshan Hanumanthappa**
+- Email: darshan.hanumanthappa@gmail.com
+- GitHub: [@Darshancisco](https://github.com/Darshancisco)
 
-1. Connect to the Jira MCP server in Cursor.
-2. Retrieve recent ticket updates:
-   ```
-   /get_recent_changes projectKey:PROJECT maxDays:7
-   ```
-3. Review the changes to stay updated on modifications.
+## 🙏 Acknowledgments
 
-## Development
+Built for AppDynamics engineering team to streamline Jira workflow integration with Cursor IDE.
 
-### Project Structure
-
-- `src/` - Source code
-  - `services/` - Jira API service
-  - `types/` - TypeScript type definitions
-  - `utils/` - Utility functions
-  - `server.ts` - MCP server implementation
-  - `index.ts` - Application entry point
-  - `cli.ts` - CLI entry point
-
-### Adding New Tools
-
-To add new tools, edit the `src/server.ts` file and add new tool definitions in the `registerTools` method.
-
-## License
-
-MIT
-
-## Author
-
-Rahul Dey - [@rahulthedevil](https://github.com/rahulthedevil)

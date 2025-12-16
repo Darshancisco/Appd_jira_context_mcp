@@ -1,6 +1,5 @@
 # Dependencies
 node_modules/
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
@@ -16,6 +15,7 @@ logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+server.log
 
 # Environment variables
 .env
@@ -34,4 +34,45 @@ yarn-error.log*
 
 # OS files
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Test files
+test-*.js
+test-*.sh
+
+# Documentation (keep only README.md)
+ARCHITECTURE.md
+DEPLOYMENT*.md
+DEVELOPER*.md
+ENHANCEMENT*.md
+FOCUSED*.md
+GITHUB*.md
+HOW-TO*.md
+IMPLEMENTATION*.md
+JIRA*.md
+MYSQL*.md
+NEXT*.md
+PRESENTATION*.md
+PYTHON*.md
+QUICK*.md
+REMOTE*.md
+RESEARCH*.md
+RESTART*.md
+ROADMAP*.md
+SETUP*.md
+SPRINT*.md
+TEAM*.md
+TESTING*.md
+TOOLS*.md
+VULNERABILITY*.md
+
+# Deployment scripts
+deploy*.sh
+check-*.sh
+quick-*.sh
+
+# Config files
+cursor-setup.json
+docker-compose.yml
+Dockerfile
+jira_python_bridge.py 
