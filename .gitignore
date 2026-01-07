@@ -74,5 +74,4 @@ quick-*.sh
 # Config files
 cursor-setup.json
 docker-compose.yml
-Dockerfile
-jira_python_bridge.py 
+Dockerfile 

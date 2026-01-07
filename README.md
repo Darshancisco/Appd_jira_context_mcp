@@ -12,7 +12,12 @@ A powerful Model Context Protocol (MCP) server that integrates Jira with Cursor 
 
 ## 📋 Prerequisites
 
-- Node.js 20.17.0 or higher
+- **Node.js** 20.17.0 or higher
+- **Python 3** (for Jira API bridge)
+- **Python packages**: `requests`, `pyyaml`, `urllib3`
+  ```bash
+  pip3 install requests pyyaml urllib3
+  ```
 - A Jira account with API access
 - Jira API token ([Generate here](https://id.atlassian.com/manage-profile/security/api-tokens))
 
@@ -29,12 +34,17 @@ A powerful Model Context Protocol (MCP) server that integrates Jira with Cursor 
    npm install
    ```
 
-3. **Create `.env` file**:
+3. **Install Python dependencies**:
+   ```bash
+   pip3 install requests pyyaml urllib3
+   ```
+
+4. **Create `.env` file**:
    ```bash
    cp .env.example .env
    ```
 
-4. **Configure your `.env` file**:
+5. **Configure your `.env` file**:
    ```env
    JIRA_BASE_URL=https://your-domain.atlassian.net
    JIRA_USERNAME=your-email@example.com
@@ -42,7 +52,7 @@ A powerful Model Context Protocol (MCP) server that integrates Jira with Cursor 
    HTTP_PORT=3000
    ```
 
-5. **Build the project**:
+6. **Build the project**:
    ```bash
    npm run build
    ```
@@ -223,9 +233,12 @@ npm run type-check
 
 ### Server won't start
 - Ensure Node.js version is 20.17.0 or higher: `node --version`
+- Ensure Python 3 is installed: `python3 --version`
+- Install Python packages: `pip3 install requests pyyaml urllib3`
 - Check if port 3000 is available
 - Verify `.env` file is configured correctly (if using Method 2/3)
 - Run `npm run build` to ensure the `dist/` folder exists
+- Ensure `jira_python_bridge.py` exists in the project root
 
 ### Can't connect in Cursor
 - If using **mcp.json**: Make sure the paths are absolute and correct
